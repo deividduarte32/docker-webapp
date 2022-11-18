@@ -27,8 +27,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USES }}
           # Password or personal access token used to log against the Docker registry
           password: ${{ secrets.PASS_HUB }}
-          # Log out from the Docker registry at the end of a job
-          logout: true
+          
       - name: Build and push Docker images
       
         uses: docker/build-push-action@v2.2.2
