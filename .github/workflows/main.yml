@@ -44,6 +44,8 @@ jobs:
     needs: [CI]
     
     steps:
+      - uses: actions/checkout@3.1.0
+  
       - name: Kubernetes Set Context
         uses: Azure/k8s-set-context@v3.0
         with:
