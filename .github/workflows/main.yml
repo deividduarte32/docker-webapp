@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
       
       - name: Docker Login
           # You may pin to the exact commit or the version.
@@ -56,6 +56,6 @@ jobs:
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v4.6
         with:
-          images: deividdua32/ci-cd-webapp.${{ github.run_number }}
+          images: deividdua32/ci-cd-webapp:${{ github.run_number }}
           manifests: |
             deployment.yaml
