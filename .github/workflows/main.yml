@@ -38,7 +38,7 @@ jobs:
           # Path to the Dockerfile
           file: ./Dockerfile # optional
           # List of tags
-          tags: deividdua32/ci-cd-webapp
+          tags: deividdua32/ci-cd-webapp:${{ github.run_number }}
           push: true
   CD:
     runs-on: ubuntu-latest
@@ -60,3 +60,4 @@ jobs:
           images: deividdua32/ci-cd-webapp:${{ github.run_number }}
           manifests: |
             deployment.yaml
+            service.yaml
