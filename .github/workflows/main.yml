@@ -39,3 +39,13 @@ jobs:
           # List of tags
           tags: deividdua32/ci-cd-webapp
           push: true
+  CD:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Kubernetes Set Context
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.CONFIG_K8S }}
+  
