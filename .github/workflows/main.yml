@@ -44,8 +44,9 @@ jobs:
     needs: [CI]
     
     steps:
+      
       - uses: actions/checkout@v3.1.0
-  
+      
       - name: Kubernetes Set Context
         uses: Azure/k8s-set-context@v3.0
         with:
@@ -55,6 +56,6 @@ jobs:
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v4.6
         with:
-          images: deividdua32/ci-cd-webapp.${{ github.run_number }}
+          images: deividdua32/ci-cd-webapp:${{ github.run_number }}
           manifests: |
             deployment.yaml
