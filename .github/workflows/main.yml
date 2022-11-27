@@ -55,5 +55,4 @@ jobs:
         with:
           images: deividdua32/ci-cd-webapp.${{ github.run_number }}
           manifests: |
-            deploy.yaml
-            service.yaml
+            deployment.yaml
