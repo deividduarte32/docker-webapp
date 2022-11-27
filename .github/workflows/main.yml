@@ -41,6 +41,7 @@ jobs:
           push: true
   CD:
     runs-on: ubuntu-latest
+    needs: [CI]
     
     steps:
       - name: Kubernetes Set Context
@@ -48,4 +49,11 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.CONFIG_K8S }}
-  
+      
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v4.6
+        with:
+          images: deividdua32/ci-cd-webapp.${{ github.run_number }}
+          manifests: |
+            k8s/deploy.yaml
+            k8s/service.yaml
