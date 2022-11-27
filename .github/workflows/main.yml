@@ -56,4 +56,3 @@ jobs:
           images: deividdua32/ci-cd-webapp.${{ github.run_number }}
           manifests: |
             k8s/deploy.yaml
-            k8s/service.yaml
