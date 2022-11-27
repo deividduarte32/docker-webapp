@@ -18,7 +18,7 @@ spec:
         app: app
     spec:
       containers:
-      - image: deividdua32/api-correios 
+      - image: deividdua32/ci-cd-webapp 
         name: imc
         resources: {}
 status: {}
