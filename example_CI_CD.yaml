@@ -1,3 +1,4 @@
+
 name: CI-CD
 
 on:
@@ -10,19 +11,50 @@ on:
 
 jobs:
   
-  build:
+  CI:
   
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v2
       
-      - name: Run a one-line script
-        run: echo Hello, world!
-        
-        
-      - name: Run a multi-line script
-        run:
-          echo Add other actions to build,
-         echo teste, and deploy your project.
-
+      - name: Docker Login
+          # You may pin to the exact commit or the version.
+          # uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        uses: docker/login-action@v2.1.0
+        with:
+          # Server address of Docker registry. If not set then will default to Docker Hub
+          # Username used to log against the Docker registry
+          username: ${{ secrets.DOCKER_HUB_USES }}
+          # Password or personal access token used to log against the Docker registry
+          password: ${{ secrets.PASS_HUB }}
+          
+      - name: Build and push Docker images
+      
+        uses: docker/build-push-action@v2.2.2
+        with:
+          # Build's context is the set of files located in the specified PATH or URL
+          context: . # optional
+          # Path to the Dockerfile
+          file: ./Dockerfile # optional
+          # List of tags
+          tags: deividdua32/ci-cd-webapp
+          push: true
+  CD:
+    runs-on: ubuntu-latest
+    needs: [CI]
+    
+    steps:
+      - name: Kubernetes Set Context
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.CONFIG_K8S }}
+      
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v4.6
+        with:
+          images: deividdua32/ci-cd-webapp:${{ github.run_number }}
+          manifests: |
+            deploy.yaml
+            service.yaml
